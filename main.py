@@ -14,11 +14,13 @@ class Fari:
 
 class Car(Fari):
 
-    def __init__(self, marka=None, color=None, model=None):
+    def __init__(self, marka=None, color=None, model=None, box_type=None, engine_status="Выключен"):
         self.marka = marka
         self.model = model
         self.color = color
         self.fari = 'выключены'
+        self.box_type = box_type
+        self.engine_status = engine_status
 
 class Mainvivod():
     def __init__(self):
@@ -65,32 +67,47 @@ class Mainvivod():
                             print('2. Изменить или добавить модель')
                             print('3. Изменить или добавить цвет')
                             print('4. Включить или выключить фары')
+                            print('5. Изменить коробку передач')
+                            print('6. Включить/выключить двигатель')
                             print('0. Выход')
                             what1 = input()
-                            if (what1 == '1') or (what1 == '2') or (what1 == '3') or (what1 == '4') or (what1 == '0'):
-                                i = int(i) - 1
-                                if what1 == '1':
-                                    print(Fore.CYAN + 'Введите марку')
-                                    mashinki[i].marka = input()
+                            i = int(i) - 1
+                            if what1 == '1':
+                                print(Fore.CYAN + 'Введите марку')
+                                mashinki[i].marka = input()
 
-                                if what1 == '2':
-                                    print(Fore.CYAN + 'Введите модель')
-                                    mashinki[i].model = input()
+                            elif what1 == '2':
+                                print(Fore.CYAN + 'Введите модель')
+                                mashinki[i].model = input()
 
-                                if what1 == '3':
-                                    print(Fore.CYAN + 'Введите цвет')
-                                    mashinki[i].color = input()
-
-                                what2 = ''
-                                if what1 == '4':
-                                    while what2 == '':
-                                        print(Fore.CYAN + '1. Включить')
-                                        print(Fore.CYAN + '2. Выключить')
-                                        what2 = input()
-                                        if what2 == '1':
-                                            mashinki[i].Vkl()
-                                        if what2 == '2':
-                                            mashinki[i].Vikl()
+                            elif what1 == '3':
+                                print(Fore.CYAN + 'Введите цвет')
+                                mashinki[i].color = input()
+                            elif what1 == '4':
+                                while what2 == '':
+                                    print(Fore.CYAN + '1. Включить')
+                                    print(Fore.CYAN + '2. Выключить')
+                                    what2 = input()
+                                    if what2 == '1':
+                                        mashinki[i].Vkl()
+                                    if what2 == '2':
+                                        mashinki[i].Vikl()
+                            elif what1 == '5':
+                                print(Fore.CYAN + 'Выберите тип коробки:\nМеханика - 1; Автомат - 2\n')
+                                choise = int(input())
+                                if choise == 1:
+                                    mashinki[i].box_type = "Механика"
+                                elif choise == 2:
+                                    mashinki[i].box_type = "Автомат"
+                                else:
+                                    print("Введены неправильные данные, установлена механика по умолчанию!")
+                                    mashinki[i].box_type = "Механика"
+                            elif what1 == '6':
+                                if "Выключен" == mashinki[i].engine_status:
+                                    mashinki[i].engine_status = "Включен"
+                                else:
+                                    mashinki[i].engine_status = "Выключен"
+                                print(f"Статус двигателя теперь {mashinki[i].engine_status}")
                             else:
                                 neverno()
                             pickle.dump(mashinki, open('mashinki.pickle', 'wb'))
@@ -122,6 +139,10 @@ class Mainvivod():
                                 print(Fore.MAGENTA + 'Цвет -', mashinki[i].color)
                             if mashinki[i].fari != None:
                                 print(Fore.MAGENTA + 'Фары -', mashinki[i].fari)
+                            if mashinki[i].box_type != None:
+                                print(Fore.MAGENTA + 'Коробка -', mashinki[i].box_type)
+                            if mashinki[i].engine_status != None:
+                                print(Fore.MAGENTA + 'Двигатель -', mashinki[i].engine_status)
                             pickle.dump(mashinki, open('mashinki.pickle', 'wb'))
                     else:
                         neverno()
